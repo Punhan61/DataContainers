@@ -1,7 +1,11 @@
 ﻿#include<iostream>
 using namespace std;
-
+using std::cin;
+using std::cout;
+using std::endl;
+#include<ctime>
 #define tab  "\t"
+
 
 class Element
 {
@@ -12,12 +16,18 @@ public:
 	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
 		count++;
+#ifdef DEBUG
 		cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	~Element()
 	{
 		count--;
+#ifdef DEBUG
 		cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	friend class ForwardList;
 	friend ForwardList operator+(const ForwardList& left, const ForwardList right);
@@ -36,6 +46,7 @@ public:
 		// Конструктор по умолчанию создает пустой список
 		// Если Голова указывает на 0, то список пуст
 		cout << "Lconstructor:\t" << this << endl;
+
 	}
 	ForwardList(const ForwardList& other):ForwardList()
 	{
@@ -43,11 +54,13 @@ public:
 			push_back(Temp->Data);*/
 		*this = other; // Из конструктора копирования вызываем оператор присваивания
 		cout << "CopyConstructor:\t" << this << endl;
+
 	}
 	ForwardList(const ForwardList&& other) :ForwardList()
 	{
 		*this = std::move(other); // Функция std::move() вызывает MoveAssignment
 		cout << "MoveConstructor:\t" << this << endl;
+
 	}
 	~ForwardList()
 	{
@@ -61,7 +74,8 @@ public:
 		while (Head)pop_front(); // Удаляем старый список
 		// Deep Copy
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-			push_back(Temp->Data);
+			push_front(Temp->Data);
+		reverse();
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
@@ -180,6 +194,20 @@ public:
 	}
 
 	// Methods
+
+	void reverse()
+	{
+		ForwardList reverse;
+		while(Head)
+		{
+			reverse.push_front(Head->Data);
+			pop_front();
+		}
+		this->Head = reverse.Head;
+		this->size = reverse.size;
+		reverse.Head = nullptr;
+	}
+
 	void print()const
 	{
 		cout << "Head:\t" << Head << endl;
@@ -206,10 +234,11 @@ ForwardList operator+(const ForwardList& left, const ForwardList right)
 	return cat;
 }
 
-#define BASE_CHECK
+//#define BASE_CHECK
 //#define COUNT_CHECK
 //#define RANGE_BASE_FOR_ARRAY
 #define RANGE_BASED_FOR_LIST
+//#define PREFORMANCE_CHECK
 
 void main()
 {
@@ -283,10 +312,36 @@ void main()
 	cout << endl;
 #endif // RANGE_BASE_FOR_ARRAY
 
-	/*ForwardList list = { 3,5,8,13,21 };
+#ifdef RANGE_BASED_FOR_LIST
+	ForwardList list = { 3,5,8,13,21 };
 	for (int i : list)
 	{
 		cout << i << "\t";
 	}
-	cout << endl;*/
+	cout << endl;
+#endif // RANGE_BASED_FOR_LIST
+
+#ifdef PREFORMANCE_CHECK
+	int n;
+	cout << "Введите размер списка: "; cin >> n;
+	ForwardList list;
+	cout << "List created, loading data..." << endl;
+	time_t start = time(NULL);
+	for (int i = 0; i < n; i++)
+	{
+		list.push_front(rand() % 100);
+	}
+	time_t end = time(NULL);
+	cout << "Data load complete" << endl;
+	cout << "Spent time: " << end - start << endl;
+	//list.print();
+	cout << "Start copying: " << endl;
+	start = time(NULL);
+	ForwardList list2 = list;
+	end = time(NULL);
+	cout << "End copying: " << endl;
+	cout << "Spent time: " << end - start << endl;
+	//list2.print();  
+#endif // PREFORMANCE_CHECK
+
 }
