@@ -29,11 +29,50 @@ public:
 #endif // DEBUG
 
 	}
+	friend class Iterator;
 	friend class ForwardList;
 	friend ForwardList operator+(const ForwardList& left, const ForwardList right);
 };
 
 unsigned int Element::count = 0;  // Статическую переменную можно проинициализировать только за классом
+
+class Iterator
+{
+	Element* Temp;
+public:
+	Iterator(Element* Temp) :Temp(Temp)
+	{
+		cout << "ItConstructor:\t" << this << endl;
+	}
+	~Iterator()
+	{
+		cout << "ItDestructor;\t" << this << endl;
+	}
+
+	Iterator& operator++()
+	{
+		Temp = Temp->pNext;
+		return *this;
+	}
+
+	bool operator==(const Iterator& other)const
+	{
+		return this->Temp == other.Temp;
+	}
+	bool operator!=(const Iterator& other)const
+	{
+		return this->Temp != other.Temp;
+	}
+
+	const int& operator*()const
+	{
+		return Temp->Data;
+	}
+	int& operator*()
+	{
+		return Temp->Data;
+	}
+};
 
 class ForwardList
 {
@@ -41,12 +80,39 @@ class ForwardList
     // Голова является точкой входа в список
 	unsigned int size;
 public:
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
+	}
+
+	// Constructors
 	ForwardList() :Head(nullptr),size(0)
 	{
 		// Конструктор по умолчанию создает пустой список
 		// Если Голова указывает на 0, то список пуст
 		cout << "Lconstructor:\t" << this << endl;
 
+	}
+	ForwardList(const std::initializer_list<int>& il) :ForwardList()
+	{
+		/*
+		 -------------------------------------------------------------------
+		 initializer_list - это контейнер
+		 Контейнер - это объект, организует хранение других объектов в памяти
+         У любого контейнера есть методы
+         begin() - возвращает итератор на начало контейнера
+         end()   - возвращает итератор на конец контейнера 
+		 -------------------------------------------------------------------	 
+		*/
+		cout << typeid(il.begin()).name() << endl;
+		for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			push_back(*it);
+		}
 	}
 	ForwardList(const ForwardList& other):ForwardList()
 	{
@@ -314,6 +380,7 @@ void main()
 
 #ifdef RANGE_BASED_FOR_LIST
 	ForwardList list = { 3,5,8,13,21 };
+	list.print();
 	for (int i : list)
 	{
 		cout << i << "\t";
