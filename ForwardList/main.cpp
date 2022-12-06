@@ -38,9 +38,9 @@ unsigned int Element::count = 0;  // Статическую переменную
 
 class Iterator
 {
-	Element* Temp;
+	Element* New;
 public:
-	Iterator(Element* Temp) :Temp(Temp)
+	Iterator(Element* Temp) :New(Temp)
 	{
 		cout << "ItConstructor:\t" << this << endl;
 	}
@@ -51,26 +51,26 @@ public:
 
 	Iterator& operator++()
 	{
-		Temp = Temp->pNext;
+		New = New->pNext;
 		return *this;
 	}
 
 	bool operator==(const Iterator& other)const
 	{
-		return this->Temp == other.Temp;
+		return this->New == other.New;
 	}
 	bool operator!=(const Iterator& other)const
 	{
-		return this->Temp != other.Temp;
+		return this->New != other.New;
 	}
 
 	const int& operator*()const
 	{
-		return Temp->Data;
+		return New->Data;
 	}
 	int& operator*()
 	{
-		return Temp->Data;
+		return New->Data;
 	}
 };
 
@@ -300,10 +300,10 @@ ForwardList operator+(const ForwardList& left, const ForwardList right)
 	return cat;
 }
 
-//#define BASE_CHECK
+#define BASE_CHECK
 //#define COUNT_CHECK
 //#define RANGE_BASE_FOR_ARRAY
-#define RANGE_BASED_FOR_LIST
+//#define RANGE_BASED_FOR_LIST
 //#define PREFORMANCE_CHECK
 
 void main()
