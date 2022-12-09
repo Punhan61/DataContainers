@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -170,19 +170,19 @@ public:
 	//				Methods:
 	void print()const
 	{
-		cout << "Ãîëîâà ñïèñêà: " << Head << endl;
+		cout << "Ð“Ð¾Ð»Ð¾Ð²Ð° ÑÐ¿Ð¸ÑÐºÐ°: " << Head << endl;
 		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-		cout << "Õâîñò ñïèñêà: " << Tail << endl;
-		cout << "Êîëè÷åñòâî ýëåìåíòîâ ñïèñêà: " << size << endl;
+		cout << "Ð¥Ð²Ð¾ÑÑ‚ ÑÐ¿Ð¸ÑÐºÐ°: " << Tail << endl;
+		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² ÑÐ¿Ð¸ÑÐºÐ°: " << size << endl;
 	}
 	void reverse_print()const
 	{
-		cout << "Õâîñò ñïèñêà: " << Tail << endl;
+		cout << "Ð¥Ð²Ð¾ÑÑ‚ ÑÐ¿Ð¸ÑÐºÐ°: " << Tail << endl;
 		for (Element* Temp = Tail; Temp; Temp = Temp->pPrev)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-		cout << "Ãîëîâà ñïèñêà: " << Head << endl;
-		cout << "Êîëè÷åñòâî ýëåìåíòîâ ñïèñêà: " << size << endl;
+		cout << "Ð“Ð¾Ð»Ð¾Ð²Ð° ÑÐ¿Ð¸ÑÐºÐ°: " << Head << endl;
+		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² ÑÐ¿Ð¸ÑÐºÐ°: " << size << endl;
 	}
 };
 
@@ -193,7 +193,7 @@ void main()
 	setlocale(LC_ALL, "");
 #ifdef BASE_CHECK
 	int n;
-	cout << "Ââåäèòå ðàçìåð ñïèñêà: "; cin >> n;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÑÐ¿Ð¸ÑÐºÐ°: "; cin >> n;
 	List list;
 	for (int i = 0; i < n; i++)
 	{
@@ -205,13 +205,13 @@ void main()
 
 	int index;
 	int value;
-	cout << "Ââåäèòå èíäåêñ äîáàâëÿåìîãî ýëåìåíòà: "; cin >> index;
-	cout << "Ââåäèòå çíà÷åíèå äîáàâëÿåìîãî ýëåìåíòà: "; cin >> value;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð½Ð´ÐµÐºÑ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> value;
 	list.insert(index, value);
 	list.print();
 	list.reverse_print();
 
-	cout << "Ââåäèòå èíäåêñ óäàëÿåìîãî ýëåìåíòà: "; cin >> index;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð½Ð´ÐµÐºÑ ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
 	list.erase(index);
 	list.print();
 	list.reverse_print();
