@@ -134,6 +134,7 @@ public:
 		cout << "LDestrucotr:\t" << this << endl;
 	}
 	// Operators
+
 	ForwardList& operator=(const ForwardList& other)
 	{
 		if (this == &other)return *this;
@@ -246,13 +247,13 @@ public:
 			cout << "Error: Out of range" << endl;
 			return;
 		}
-		Element* erase = nullptr;
+		Element* erased = nullptr;
 		Element* Temp = Head;
 		for (int i = 0; i < Index - 1; i++)
 			Temp = Temp->pNext;
-		erase = Temp->pNext;
+		erased = Temp->pNext;
 		Temp->pNext = Temp->pNext->pNext;
-		delete erase;
+		delete erased;
 	}
 	void cleaner()
 	{
