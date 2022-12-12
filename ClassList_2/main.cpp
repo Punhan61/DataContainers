@@ -215,7 +215,7 @@ public:
 
 	/////////    Operators:   //////////////
 
-	List& operator=(const List& other)
+	List& operator=(const T& other)
 	{
 		if (this == &other)return *this;
 		while (Head)pop_front();
@@ -227,7 +227,7 @@ public:
 
 	///////		Adding Elements:     //////////////
 
-	void push_front(int Data)
+	void push_front(T Data)
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
@@ -238,7 +238,7 @@ public:
 		Head = Head->pPrev = new Element(Data, Head);
 		size++;
 	}
-	void push_back(int Data)
+	void push_back(T Data)
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
@@ -249,7 +249,7 @@ public:
 		Tail = Tail->pNext = new Element(Data, nullptr, Tail);
 		size++;
 	}
-	void insert(int Index, int Data)
+	void insert(T Index, T Data)
 	{
 		if (Index > size)
 		{
