@@ -6,15 +6,16 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n----------------------------------\n"
 
+template<class T>
 class List
 {
 	class Element
 	{
-		int Data;
+		T Data;
 		Element* pNext;
 		Element* pPrev;
 	public:
-		Element(int Data, Element* pNext = nullptr, Element* pPrev = nullptr)
+		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr)
 			:Data(Data), pNext(pNext), pPrev(pPrev)
 		{
 			cout << "EConstructor:\t" << this << endl;
@@ -44,7 +45,6 @@ class List
 			cout << "CBIDestructor:\t" << this << endl;
 #endif // DEBUG
 		}
-
 		bool operator==(const ConstBaseIterator& other)const
 		{
 			return this->Temp == other.Temp;
@@ -120,7 +120,7 @@ public:
 			Temp = Temp->pPrev;
 			return *this;
 		}
-		ConstReversIterator operator++(int)
+		ConstReversIterator& operator++(int)
 		{
 			ConstReversIterator old = *this;
 			Temp = Temp->pPrev;
@@ -141,10 +141,10 @@ public:
 	class Iterator :public ConstIterator
 	{
 	public:
-		Iterator(Element* Temp):ConstIterator(Temp){}
+	     Iterator(Element* Temp):ConstIterator(Temp){}
 		~Iterator(){}
 		
-		int& operator*()
+		T& operator*()
 		{
 			return Temp->Data;
 		}
@@ -154,7 +154,7 @@ public:
 	public:
 		ReversIterator(Element* Temp) :ConstReversIterator(Temp) {}
 		~ReversIterator() {}
-		int& operator*()
+		T& operator*()
 		{
 			return Temp->Data;
 		}
@@ -167,11 +167,11 @@ public:
 	{
 		return nullptr;
 	}
-	Iterator begin()
+	Iterator& begin()
 	{
 		return Head;
 	}
-	Iterator end()
+	Iterator& end()
 	{
 		return nullptr;
 	}
@@ -185,21 +185,21 @@ public:
 	}
 
 	///////////   Constructors  /////////////
-
+	
 	List()
 	{
 		Head = Tail = nullptr;
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
-	List(const std::initializer_list<int>& il) :List()
+	List(const std::initializer_list<T>& il) :List()
 	{
 		for (int const* it = il.begin(); it != il.end(); it++)
 		{
 			push_back(*it);
 		}
 	}
-	List(const List& other) :List()
+	List(const T& other) :List()
 	{
 		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
 			push_back(Temp->Data);*/
@@ -350,12 +350,13 @@ public:
 		cout << "Голова списка: " << Head << endl;
 		cout << "Количество элементов списка: " << size << endl;
 	}
+	
 };
 
-List operator+(const List& left, const List& right)
+List<class T> operator+(const T& left,const T& right)
 {
-	List cat = left;
-	for (List::ConstIterator it = right.begin(); it != right.end(); ++it)
+	List<T> cat = left;
+	for (List<T>::ConstIterator it = right.begin(); it != right.end(); ++it)
 	{
 		cat.push_back(*it);
 		//*it *= 100;
@@ -363,9 +364,9 @@ List operator+(const List& left, const List& right)
 	return cat;
 }
 
-void FillRand(List& list)
+void FillRand(T& list)
 {
-	for (List::Iterator it = list.begin(); it != list.end(); it++)
+	for (List<T>::Iterator it = list.begin(); it != list.end(); it++)
 	{
 		*it = rand();
 	}
@@ -417,7 +418,7 @@ void main()
 	list2.reverse_print();
 #endif // CONSTRUCTORS_CHECK
 
-	List list = { 3, 5, 8, 13, 21 };
+	/*List list = { 3, 5, 8, 13, 21 };
 	for (int i : list)
 	{
 		cout << i << tab;
@@ -434,5 +435,7 @@ void main()
 	List list3 = list + list2;
 	for (int i : list)cout << i << tab; cout << endl;
 	for (int i : list2)cout << i << tab; cout << endl;
-	for (int i : list3)cout << i << tab; cout << endl;
+	for (int i : list3)cout << i << tab; cout << endl;*/
+
+
 }
