@@ -16,15 +16,8 @@ class List
 		Element* pNext;
 		Element* pPrev;
 	public:
-		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr)
-			:Data(Data), pNext(pNext), pPrev(pPrev)
-		{
-			cout << "EConstructor:\t" << this << endl;
-		}
-		~Element()
-		{
-			cout << "EDestructor:\t" << this << endl;
-		}
+		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr);
+		~Element();
 		friend class List<T>;
 	}*Head, * Tail;
 	unsigned int size;
@@ -67,9 +60,9 @@ public:
 	class Iterator :public ConstIterator
 	{
 	public:
-	     Iterator(Element* Temp):ConstIterator(Temp){}
-		~Iterator(){}
-		
+		Iterator(Element* Temp) :ConstIterator(Temp) {}
+		~Iterator() {}
+
 		T& operator*();
 	};
 
@@ -89,30 +82,52 @@ public:
 	ConstReversIterator rend()const;
 	ReversIterator rbegin();
 	ReversIterator rend();
-	
+
 	///////////   Constructors  /////////////
 	List();
 	List(const std::initializer_list<T>& il);
 	List(const List<T>& other);
 	~List();
-	
+
 	/////////    Operators:   //////////////
 	List<T>& operator=(const List<T>& other);
-	
+
 	///////		Adding Elements:     //////////////
 	void push_front(T Data);
 	void push_back(T Data);
 	void insert(int Index, T Data);
-	
+
 	/////////////	Removing Elements:   ///////////////
 	void pop_front();
 	void pop_back();
 	void erase(int Index);
-	
+
 	//				Methods:
 	void print()const;
 	void reverse_print()const;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////                       ELEMENTS
+//////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>
+List<T>::Element::Element(T Data, Element* pNext, Element* pPrev)
+	:Data(Data), pNext(pNext), pPrev(pPrev)
+{
+#ifdef DEBUG
+	cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
+}
+
+template<typename T>
+List<T>::Element::~Element()
+{
+#ifdef DEBUG
+	cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////                       CONST_BASE_ITERATORS
@@ -242,7 +257,7 @@ template<typename T>typename List<T>::ConstReversIterator List<T>::ConstReversIt
 /////////////////////                    ITERATORS
 //////////////////////////////////////////////////////////////////////////////////////////
 
-template<typename T>T&List<T>::Iterator::operator*()
+template<typename T>T& List<T>::Iterator::operator*()
 {
 	return ConstBaseIterator::Temp->Data;
 }
@@ -463,7 +478,7 @@ void List<T>::reverse_print()const
 }
 
 template<class T>
-List<T> operator+(const List<T>& left,const List<T>& right)
+List<T> operator+(const List<T>& left, const List<T>& right)
 {
 	List<T> cat = left;
 	for (typename List<T>::ConstIterator it = right.begin(); it != right.end(); ++it)
@@ -566,7 +581,7 @@ void main()
 	for (double i : d_list_3)cout << i << tab; cout << endl;
 
 	List<std::string>s_list_1 = { "Хорошо","живет","на","свете","Винни-Пух" };
-	List<std::string>s_list_2 = { "Вот","и","сказочки","конец"};
+	List<std::string>s_list_2 = { "Вот","и","сказочки","конец" };
 	List<std::string>s_list_3 = s_list_1 + s_list_2;
 	for (std::string i : s_list_3)cout << i << tab; cout << endl;
 	for (List<std::string>::ReversIterator it = s_list_3.rbegin(); it != s_list_3.rend(); ++it)
